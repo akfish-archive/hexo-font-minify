@@ -6,8 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akfish/hexo-font-minify.git"
+  },
+  "author": "AKFish <akfish@gmail.com> (http://catx.me)",
+  "keywords": [
+    "website",
+    "blog",
+    "cms",
+    "framework",
+    "hexo",
+    "minify",
+    "font"
+  ],
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.25",
     "fontmin": "^0.9.0-alpha-1",
