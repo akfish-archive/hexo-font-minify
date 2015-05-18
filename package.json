@@ -1,0 +1,17 @@
+{
+  "name": "hexo-font-minify",
+  "version": "1.0.0",
+  "description": "Generate minified fonts containing used characters only",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "fontmin": "^0.9.0-alpha-1",
+    "hexo-fs": "^0.1.3",
+    "underscore": "^1.8.3"
+  }
+}
