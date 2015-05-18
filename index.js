@@ -13,14 +13,12 @@ var DEFAULT_OPTS = {
   svg: true
 };
 
-console.log(hexo.theme.base);
+var mt = require('microtime');
 hexo.extend.generator.register('font-minify', function (locals) {
-  console.log('Font minifier');
   // Gather all possible sources for visible CJK characters
   var opts = _.defaults(DEFAULT_OPTS, hexo.theme.config.font || {});
   opts.src = path.resolve(hexo.theme.base, opts.src);
   opts.cacheBase = path.resolve(hexo.theme.base, opts.cacheBase);
-  console.log(opts);
   var sources = [hexo.config, hexo.theme.config];
   locals.posts.forEach(function (post) {
     sources.push(post);
@@ -72,8 +70,6 @@ hexo.extend.generator.register('font-minify', function (locals) {
     md5.update(text);
     var hash = md5.digest('hex');
 
-    console.log(text.length);
-
     return {
       hash: hash,
       text: text
@@ -81,16 +77,19 @@ hexo.extend.generator.register('font-minify', function (locals) {
   }
 
   return new Promise(function (resolve, reject) {
-
+    var startTick = mt.now();
     Promise.map(sources, getCharacters, {concurrency: 10})
       .then(merge)
       .then(function (r) {
+        var hashElapse = mt.now() - startTick;
         // check r.hash, if changed, minifiy, else return cache
         var cacheDir = path.resolve(opts.cacheBase, r.hash),
           cacheHit = fs.existsSync(cacheDir);
 
-        console.log(r);
+        console.log("Processed " + sources.length + " objects in " + hashElapse / 1000 +"ms");
+        console.log("Found " + r.text.length + " characters. (HASH = " + r.hash + ")");
         if (cacheHit) {
+          console.log("Fonts already minified and cached.");
           fs.listDir(cacheDir).then(function(files) {
             resolve(files.map(function(f) {
               return {
@@ -102,7 +101,7 @@ hexo.extend.generator.register('font-minify', function (locals) {
             }));
           });
         } else {
-          console.log("Minify fonts. Hash " + r.hash);
+          console.log("Minifying fonts...");
           var fontmin = new Fontmin()
             .src(opts.src)
             .use(Fontmin.glyph({
@@ -118,8 +117,12 @@ hexo.extend.generator.register('font-minify', function (locals) {
           if (opts.woff) fontmin.use(Fontmin.ttf2woff());
           if (opts.svg) fontmin.use(Fontmin.ttf2svg());
 
+          var minifyStartTick = mt.now();
+
           fontmin.run(function (err, files, streams) {
             if (err) return reject(err);
+            var minifyElpase = mt.now() - minifyStartTick;
+            console.log("Minfied " + files.length + " fonts in " + minifyElpase / 1000 / 1000 + "s");
             var routes = files.map(function (f) {
               var name = path.basename(f.path);
               return {
