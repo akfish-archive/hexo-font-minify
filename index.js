@@ -7,7 +7,10 @@ var crypto = require('crypto');
 var DEFAULT_OPTS = {
   src: "./fonts/*.ttf",
   urlBase: "fonts/",
-  cacheBase: "./.font-cache"
+  cacheBase: "./.font-cache",
+  eot: true,
+  woff: true,
+  svg: true
 };
 
 console.log(hexo.theme.base);
@@ -40,7 +43,6 @@ hexo.extend.generator.register('font-minify', function (locals) {
       if (typeof value === 'string') {
         for (var i = 0; i < value.length; i++) {
           var c = value[i];
-          // TODO: check for CJK
           if (m[c]) continue;
           m[c] = true;
           text += c;
@@ -70,7 +72,6 @@ hexo.extend.generator.register('font-minify', function (locals) {
     md5.update(text);
     var hash = md5.digest('hex');
 
-    // TODO: store
     console.log(text.length);
 
     return {
@@ -112,6 +113,10 @@ hexo.extend.generator.register('font-minify', function (locals) {
               glyph: true
             }))
             .dest(cacheDir);
+
+          if (opts.eot) fontmin.use(Fontmin.ttf2eot());
+          if (opts.woff) fontmin.use(Fontmin.ttf2woff());
+          if (opts.svg) fontmin.use(Fontmin.ttf2svg());
 
           fontmin.run(function (err, files, streams) {
             if (err) return reject(err);
