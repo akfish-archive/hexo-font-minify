@@ -9,4 +9,5 @@ require('./gulp-task/mocha')('default')
 require('./gulp-task/clean')('default')
 #>
 #< contents
+require('./gulp-task/test-asset')()
 #>
