@@ -33,7 +33,7 @@
       "grep": "",
       "timeout": 2000,
       "bail": false,
-      "ignoreLeaks": false
+      "ignoreLeaks": true
     }
   },
   "clean:default": {

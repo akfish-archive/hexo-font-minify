@@ -4,10 +4,12 @@ import { createHash } from "crypto";
 
 export default class Digest {
   static build(hexo) {
+    let locals = hexo.locals.toObject();
+    let data = _.flatten(_.values(locals).map((v) => v.data))
     let sources = [
         hexo.config,
         hexo.theme.config
-      ].concat(_.flatten(_.values(hexo.locals.toObject)));
+      ].concat(data);
 
     return new Digest(sources);
   }
@@ -21,10 +23,11 @@ export default class Digest {
   _getCharacters(source) {
     let m = {};
     let characters = _.values(source)
-      .map((v) => {
-        if (typeof v === 'object') return this._getCharacters(v);
-        return v;
-      })
+      // BUG: break if circular dependencies are present
+      // .map((v) => {
+      //   if (typeof v === 'object') return this._getCharacters(v);
+      //   return v;
+      // })
       .filter((v) => typeof v === 'string')
       .join("")
       .split("");
