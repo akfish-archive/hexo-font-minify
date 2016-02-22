@@ -1,0 +1,49 @@
+{
+  "es6:default": {
+    "taskName": "es6",
+    "src": [
+      "./src/**/*.es6"
+    ],
+    "dst": "./lib",
+    "sourceMap": true,
+    "_useBabelRc": true,
+    "opts": {
+      "presets": [
+        "es2015"
+      ]
+    }
+  },
+  "mocha:default": {
+    "taskName": "test",
+    "src": [
+      "./test/**/*.spec.coffee"
+    ],
+    "opts": {
+      "ui": "bdd",
+      "reporter": "spec",
+      "globals": [
+        "chai",
+        "expect",
+        "Hexo",
+        "fs"
+      ],
+      "require": [
+        "./test/scaffolds.coffee"
+      ],
+      "grep": "",
+      "timeout": 2000,
+      "bail": false,
+      "ignoreLeaks": false
+    }
+  },
+  "clean:default": {
+    "taskName": "clean",
+    "src": [
+      "./lib/**/*.*"
+    ],
+    "opts": {
+      "force": false,
+      "dryRun": false
+    }
+  }
+}
