@@ -23,3 +23,11 @@ module.exports =
       setup,
       teardown
     }
+
+  mockHexoWithThemeConfig: (theme_base, opts) ->
+    hexo =
+      theme:
+        base: theme_base
+        config: opts
+
+    hexo
