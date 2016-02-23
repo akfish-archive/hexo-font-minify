@@ -17,6 +17,7 @@ describe "Generator", ->
       /fonts(\\|\/)simyou\.svg/
       /fonts(\\|\/)simyou\.ttf/
       /fonts(\\|\/)simyou\.woff/
+      /fonts(\\|\/)all\.css/
     ].forEach (r) ->
       expect(route_paths).to.include.something
         .that.match(r)

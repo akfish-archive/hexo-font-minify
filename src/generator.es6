@@ -4,6 +4,7 @@ import Promise from "bluebird";
 import Digest from "./digest";
 import NamedLogger from "./logger";
 import path from "path";
+import File from "vinyl";
 
 const Fontmin = require('fontmin');
 const fs = require('hexo-fs');
@@ -81,8 +82,22 @@ export default class Generator {
 
     return new Promise((resolve, reject) => {
 
-      fontmin.run((err, files, streams) => {
+      fontmin.run((err, files) => {
         if (err) return reject(err);
+
+        if (opts.mergeCss) {
+          let cssFiles = files.filter((f) => path.extname(f.path) === '.css');
+          let base = opts.cacheDir,
+            filePath = path.join(base, opts.mergeCssName),
+            contents = Buffer.concat(_.pluck(cssFiles, "contents"));
+          files.push(new File({
+            cwd: __dirname,
+            base,
+            path: filePath,
+            contents: contents
+          }));
+          fs.writeFileSync(filePath, contents);
+        }
 
         resolve(files.map((f) => {
           let name = path.basename(f.path);

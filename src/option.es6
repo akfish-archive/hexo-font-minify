@@ -9,6 +9,8 @@ export const DEFAULT_OPTS = {
   eot: true,
   woff: true,
   svg: true,
+  mergeCss: true,
+  mergeCssName: 'all.css',
   css: {
     fontPath: "./"
   }
