@@ -28,6 +28,12 @@ describe "Option", ->
       eot: false
       woff: false
 
+  script_config_object =
+    font:
+      script: "_config_object.js"
+      eot: false
+      woff: false
+
   it "should load default options if none are provided", ->
     opts = getOptions(mockHexo(empty_config))
     expected = RESOLVED_DEFAULT_OPTS
@@ -40,8 +46,14 @@ describe "Option", ->
 
     expect(opts).to.deep.equal(expected)
 
-  it "should override theme config with config script", ->
+  it "should override theme config with config script (exports function)", ->
     opts = getOptions(mockHexo(script_config))
     expected = x(RESOLVED_DEFAULT_OPTS, script_config.font, svg: false)
+
+    expect(opts).to.deep.equal(expected)
+
+  it "should override theme config with config script (exports object)", ->
+    opts = getOptions(mockHexo(script_config_object))
+    expected = x(RESOLVED_DEFAULT_OPTS, script_config_object.font, svg: false)
 
     expect(opts).to.deep.equal(expected)

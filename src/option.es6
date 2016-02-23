@@ -20,7 +20,7 @@ function loadConfigJs(opts) {
   let configJs = path.resolve(path.dirname(opts.src), opts.script);
   try {
     let config = require(configJs);
-    return _.extend(opts, config());
+    return _.extend(opts, typeof config === 'function' ? config() : config);
   } catch (e) {
     return opts;
   }
