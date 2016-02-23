@@ -1,4 +1,4 @@
-# hexo-font-minify
+# hexo-font-minify [![Build Status](https://travis-ci.org/akfish/hexo-font-minify.svg?branch=master)](https://travis-ci.org/akfish/hexo-font-minify)
 
 Generate minified fonts containing only used characters.
 

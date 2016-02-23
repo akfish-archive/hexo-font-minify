@@ -8,7 +8,7 @@ module.exports = ->
   site_dir = "./test/site"
   asset_dir = "./test/asset"
 
-  gulp.task 'test-asset', ->
+  gulp.task 'asset:test', ->
     hexo = new Hexo(site_dir)
     fs.mkdirs(site_dir).then(->
       console.log("Creating empty site...")

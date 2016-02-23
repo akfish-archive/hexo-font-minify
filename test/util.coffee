@@ -1,13 +1,12 @@
 path = require('path')
 Generator = require('../src/generator')
-console.log(Generator)
 
 module.exports =
   # Note: somewhere in hexo's packages there's a global leak.
   # Disabled mocha's leak checking for now
   initHexo: (name, registerExtension = true) ->
     site_dir = "./test/site"
-    if !fs.existsSync(site_dir) then throw new Error("Test site not found. Run `gulp test-asset` first.")
+    if !fs.existsSync(site_dir) then throw new Error("Test site not found. Run `gulp asset:test` first.")
     base_dir = path.join(__dirname, name)
     hexo = new Hexo(base_dir)
     generator = new Generator(hexo)

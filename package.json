@@ -4,7 +4,8 @@
   "description": "Generate minified fonts containing used characters only",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "gulp clean && gulp es6"
+    "prepublish": "gulp clean && gulp es6",
+    "test": "gulp clean:test && gulp asset:test && gulp test"
   },
   "repository": {
     "type": "git",

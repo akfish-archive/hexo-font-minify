@@ -54,5 +54,15 @@
         }
       }
     }
+  },
+  "clean:test": {
+    "taskName": "clean:test",
+    "src": [
+      "./test/site/"
+    ],
+    "opts": {
+      "force": false,
+      "dryRun": false
+    }
   }
 }
