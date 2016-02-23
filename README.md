@@ -31,7 +31,7 @@ $ npm install --save hexo-font-minify
 
 Create a theme script in your theme's `scripts` folder:
 ```js
-require('hexo-font-minify/theme')(hexo);
+require('hexo-font-minify/lib/main')(hexo);
 ```
 
 Note that if you do not pack `node_modules` with your theme, you will need to ask users to run:

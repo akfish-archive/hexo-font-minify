@@ -1,5 +1,6 @@
 path = require('path')
-fontMinify = require('../src/main')
+Generator = require('../src/generator')
+console.log(Generator)
 
 module.exports =
   # Note: somewhere in hexo's packages there's a global leak.
@@ -9,8 +10,9 @@ module.exports =
     if !fs.existsSync(site_dir) then throw new Error("Test site not found. Run `gulp test-asset` first.")
     base_dir = path.join(__dirname, name)
     hexo = new Hexo(base_dir)
+    generator = new Generator(hexo)
     if registerExtension
-      fontMinify(hexo)
+      generator.register()
 
     setup = ->
       fs.copyDir(site_dir, base_dir).then(-> hexo.init())
@@ -18,6 +20,7 @@ module.exports =
       fs.rmdir(base_dir)
 
     return {
+      generator,
       base_dir,
       hexo,
       setup,

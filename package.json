@@ -1,6 +1,6 @@
 {
   "name": "hexo-font-minify",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Generate minified fonts containing used characters only",
   "main": "lib/index.js",
   "scripts": {
@@ -34,6 +34,7 @@
     "babel-register": "^6.5.2",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
+    "chai-things": "^0.2.0",
     "coffee-script": "^1.10.0",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
@@ -42,6 +43,7 @@
     "gulp-mocha": "^2.2.0",
     "hexo": "^3.1.1",
     "hexo-util": "^0.5.3",
-    "source-map-support": "^0.4.0"
+    "source-map-support": "^0.4.0",
+    "underscore": "^1.8.3"
   }
 }

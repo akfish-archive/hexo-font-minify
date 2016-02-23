@@ -51,19 +51,19 @@ describe "Digest", ->
     expect(d.update()).to.eventually.deep.equal(expected)
 
   describe "`Digest.build(hexo)`", ->
-      h = {hexo} = util.initHexo('test_digest', false)
+    h = {hexo} = util.initHexo('test_digest', false)
 
-      before ->
-        this.timeout(0)
-        h.setup()
-          .then(-> hexo.call('generate', {}))
-      after ->
-        this.timeout(0)
-        h.teardown()
+    before ->
+      this.timeout(0)
+      h.setup()
+        .then(-> hexo.call('generate', {}))
+    after ->
+      this.timeout(0)
+      h.teardown()
 
-      it "should build digest for hexo site", ->
-        expected =
-          text: '\n !"#%&\'()*,-./0123456789:;<=>@ABCDEFGHIJLMNOPQRSTUVWXYZ[\\]_`abcdefghijklmnopqrstuvwxyz{|}~‘’…、。あいうえおかがきくぐけこごさしすずせそぞただちっつてでとどなにのはへべぼまめもやょよらりるれろをんキスソダテトネミルンー一上下不世中主之乎九也亂了事些亮人今他以但作你使來例供係保信個們倒值假做停備傳價元兄兒全公具再出分初別利制前力助動務化北區十即又反取受古只可吃合同味和品員哥善器嚴回団困國園在地坐型外多夠大天夫如始子学學安実室家寫尊導小少就尽局屋山工市師帰常年幾底座廣建式弟当影很後従從微快怎息意應我戰手打抗抜拉排收放政故教敬數文新於旅日明星昨是時最會月有服未本果查校條業槙樂次歌正此步歷母每毛氣沒河法洋洲海清測溫滿演灣為然營爸爺物狀獄王現生產由畫異當病發百的目盲直相看着知示私科程種空突竟童第箸細結統經緊缶習老考者而聴能腳臉自著薬藝蘭行衣裝西要親觀触言試詩話語説調論識變讓財資賽走起趣足路身車輪辦辺這通連進過道達都量金間関關除陸際集電非響領頭風首香驗體高魚麼！，：；？'
-          hash: '5b579651306bea8b4a4cca65058d9307'
-        d = Digest.build(hexo)
-        expect(d.update()).to.eventually.deep.equal(expected)
+    it "should build digest for hexo site", ->
+      expected =
+        text: '\n !"#%&\'()*,-./0123456789:;<=>@ABCDEFGHIJLMNOPQRSTUVWXYZ[\\]_`abcdefghijklmnopqrstuvwxyz{|}~‘’…、。あいうえおかがきくぐけこごさしすずせそぞただちっつてでとどなにのはへべぼまめもやょよらりるれろをんキスソダテトネミルンー一上下不世中主之乎九也亂了事些亮人今他以但作你使來例供係保信個們倒值假做停備傳價元兄兒全公具再出分初別利制前力助動務化北區十即又反取受古只可吃合同味和品員哥善器嚴回団困國園在地坐型外多夠大天夫如始子学學安実室家寫尊導小少就尽局屋山工市師帰常年幾底座廣建式弟当影很後従從微快怎息意應我戰手打抗抜拉排收放政故教敬數文新於旅日明星昨是時最會月有服未本果查校條業槙樂次歌正此步歷母每毛氣沒河法洋洲海清測溫滿演灣為然營爸爺物狀獄王現生產由畫異當病發百的目盲直相看着知示私科程種空突竟童第箸細結統經緊缶習老考者而聴能腳臉自著薬藝蘭行衣裝西要親觀触言試詩話語説調論識變讓財資賽走起趣足路身車輪辦辺這通連進過道達都量金間関關除陸際集電非響領頭風首香驗體高魚麼！，：；？'
+        hash: '5b579651306bea8b4a4cca65058d9307'
+      d = Digest.build(hexo)
+      expect(d.update()).to.eventually.deep.equal(expected)
