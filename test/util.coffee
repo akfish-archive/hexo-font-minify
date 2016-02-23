@@ -8,7 +8,7 @@ module.exports =
     site_dir = "./test/site"
     if !fs.existsSync(site_dir) then throw new Error("Test site not found. Run `gulp asset:test` first.")
     base_dir = path.join(__dirname, name)
-    hexo = new Hexo(base_dir)
+    hexo = new Hexo(base_dir, silent: true)
     generator = new Generator(hexo)
     if registerExtension
       generator.register()

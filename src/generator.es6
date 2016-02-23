@@ -5,6 +5,7 @@ import Digest from "./digest";
 import NamedLogger from "./logger";
 import path from "path";
 import File from "vinyl";
+import renameFontFamily from "./plugin/rename-font-family";
 
 const Fontmin = require('fontmin');
 const fs = require('hexo-fs');
@@ -39,6 +40,7 @@ export default class Generator {
       .tap((routes) => {
         logger.end("minify");
         summary.routes = routes;
+        summary.cacheBase = opts.cacheBase;
         this._summaries.push(summary);
       });
 
@@ -70,6 +72,17 @@ export default class Generator {
     ));
   }
   _generateFromDigest({ text, hash }, opts) {
+    // Polyfill for font-family transform
+    // Deprecate once https://github.com/ecomfe/fontmin/pull/29 is merged
+    let cssOpts = _.clone(opts.css),
+      { fontFamily } = cssOpts,
+      useFontFamilyTransform = typeof fontFamily === 'function';
+
+    // #29
+    if (useFontFamilyTransform) {
+      opts.css = _.omit(cssOpts, 'fontFamily');
+    }
+
     let fontmin = new Fontmin()
       .src(opts.src)
       .use(Fontmin.glyph({ text }))
@@ -79,6 +92,9 @@ export default class Generator {
     if (opts.eot) fontmin.use(Fontmin.ttf2eot());
     if (opts.woff) fontmin.use(Fontmin.ttf2woff());
     if (opts.svg) fontmin.use(Fontmin.ttf2svg());
+
+    // #29
+    if (useFontFamilyTransform) fontmin.use(renameFontFamily(cssOpts));
 
     return new Promise((resolve, reject) => {
 
