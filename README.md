@@ -43,7 +43,6 @@ In cloned theme folder.
 ### Configuration
 
 (Optional)In your theme's `_config.yml` file, add the following section:
-
 ```yaml
 # Configuration for hexo-font-minify
 # All paths are resolved relative to theme's base dir
@@ -51,6 +50,8 @@ In cloned theme folder.
 font:
   # Source path/pattern of font files
   src: "./fonts/*.ttf"
+  # Configuration script
+  script: "config.js"
   # URL base for generated font assets
   urlBase: "fonts/" # -> http://yoursite.com/fonts/font.css
   # Cache base
@@ -62,7 +63,51 @@ font:
   woff: true
   # Generate .svg font file
   svg: true
+  # Merge all .css files into one
+  mergeCss: true
+  # Merged .css file name
+  mergeCssName: 'all.css'
+  # CSS config, see also https://github.com/akfish/fontmin#css
+  css:
+    #`location of font file `
+    fontPath: './'
+    # inject base64 data:application/x-font-ttf; (gzip font with css).
+    base64: false
+    # generate class for each glyph. default = false
+    glyph: false
+    # class prefix, only work when glyph is `true`. default to "icon"
+    iconPrefix: 'icon'
+    # custom fontFamily, default to filename or get from analysed ttf file
+    fontFamily: 'myfont'
+    # rewrite fontFamily as filename force. default = false
+    asFileName: false
+    # boolean to add local font. default = false
+    local: false
 ```
+
+Alternatively you can create a `.js` file named `opts.script` in `opts.src` folder (in default settings, it's `fonts/config.js`):
+```js
+// Exports a function that returns an object
+module.exports = function() {
+  return {
+    // opts
+    css: {
+      // css.fontFamily supports transform function
+      // it can only be provided from script
+      fontFamily: function(font, ttf) {
+        return ttf.name.fontFamily + "(transformed)";
+      }
+    }
+  }
+}
+// Or just an object
+module.exports = {
+  // opts
+}
+```
+
+Script configuration overrides values in `_config.yml`.
+
 
 Then copy your fonts to `src` folder (in this case, `./fonts`). Only .ttf format are supported.
 
@@ -76,7 +121,10 @@ Add the following code in your theme's `<head>` section:
 <!DOCTYPE html>
 <head>
   <!-- other stuff -->
+  <!-- include one font -->
   <%- css("fonts/font_name") %>
+  <!-- include all fonts -->
+  <%- css("fonts/all") %>
 </head>
 <body>
   <!-- other stuff -->
